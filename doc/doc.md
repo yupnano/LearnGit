@@ -6,15 +6,6 @@ NebPay SDK 为不同平台的交易提供了统一的支付接口，开发者在
 ### 接口介绍
 
 目前NebPay 提供了以下五个接口：
-
-* `pay` 用于账户间的NAS转账
-* `nrc20pay`  用于NRC20代币的转账
-* `deploy`  用于部署智能合约
-* `call`  用于调用智能合约
-* `simulateCall` 用于模拟运行智能合约的调用
-* `queryPayInfo` 用于查询支付结果
-  
-
  
 接口 | 简介 
 :--- | :---
@@ -40,6 +31,12 @@ Dapp中使用NebPay的例子， 可参考`examples/example.html`.
     var NebPay = require("nebpay");
     var nebPay = new NebPay();    
     var serialNumber;
+    var options = {
+        goods: {        //商品描述
+            name: "example"
+        },        
+	    listener: undefined //为浏览器插件指定listener,处理交易返回结果
+    }
     serialNumber = nebPay.pay(to, value, options); //调用交易接口会返回32位的交易序列号，Dapp端用该序列号查询交易结果
 </script>
 ```
@@ -53,21 +50,21 @@ Dapp中使用NebPay的例子， 可参考`examples/example.html`.
 var defaultOptions = {
 	goods: {        //Dapp端对当前交易商品的描述信息
 		name: "",       //商品名称
-		desc: "",       //
+		desc: "",       //描述信息
 		orderId: "",    //订单ID
-		ext: ""         //
+		ext: ""         //扩展字段
 	},
 	qrcode: {
 		showQRCode: false,      //是否显示二维码信息
-		container: undefined    //
+		container: undefined    //指定显示二维码的canvas容器，不指定则生成一个默认canvas
 	},
 	// callback is the return url after payment
 	// callback 是记录交易返回信息的交易查询服务器地址（目前是固定的地址，Dapp开发者暂时不能指定自己的交易查询服务器）
 	callback: undefined,
 	// listener： specify a listener function to handle payment feedback message
-	// listener: 指定一个listener函数来处理交易返回信息
+	// listener: 指定一个listener函数来处理交易返回信息（仅用于浏览器插件，App钱包不支持listener）
 	listener: undefined,
-	// if use nrc20pay ,should input nrc20 params like name, symbol, decimals
+	// if use nrc20pay ,should input nrc20 params like name, address, symbol, decimals
 	nrc20: undefined
 };
 ```
@@ -96,8 +93,19 @@ var defaultOptions = {
 
 `value` 转账数额，单位为 NRC20 token
 
-`options` 必须指定代币的小数点位数，也可指定代币名称、符号，参考 options参数说明
-
+`options` 必须指定代币的小数点位数和代币合约地址，另外可指定代币名称、符号。
+*
+    ```js
+    options = {
+        //.....
+        nrc20: {  
+            address: "", //contract address of nrc20
+            decimals: 0,
+            name: "",
+            symbol: ""
+        }
+    }
+    ```
 
 ##### deploy
 
@@ -145,7 +153,17 @@ simulateCall 参数与 call 接口参数相同，对应于RPC [Call](https://git
 参数说明：
 
 `serialNumber` 交易序列号，使用上面介绍的接口发送交易后会返回该交易的序列号，是一个32位随机数。钱包App会将交易结果会上传到交易查询呢服务器，Dapp端用` queryPayInfo(serialNumber)`来查询交易结果信息。
-
+返回值: `queryPayInfo`会返回一个`Promise`.
+*
+  ```js
+  nebPay.queryPayInfo(serialNumber)
+      .then(function (resp) {
+          console.log(resp);
+      })
+      .catch(function (err) {
+          console.log(err);
+      });
+  ```
 
 #### 交易返回信息的处理
 浏览器插件和钱包app对交易返回信息有不同的处理方式。
@@ -155,12 +173,14 @@ simulateCall 参数与 call 接口参数相同，对应于RPC [Call](https://git
 #### 交易返回信息
 
  `pay`, `nrc20pay`, `deploy`, `call`的返回信息格式为:
-```$xslt
+```js
 {"txhash":"a333288574df47b411ca43ed656e16c99c0af98fa3ab14647ce1ad66b45d43f1","contract_address":""}
 ```
 
 `simulateCall`的返回信息格式为:
-```$xslt
+```js
 {"result":"null","execute_err":"","estimate_gas":"20168"}
 ```
 
+#### 
+在开发Dapp页面时，如果不想使用NebPay，也可以使用neb.js直接访问星云链。
