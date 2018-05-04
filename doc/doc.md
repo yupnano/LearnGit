@@ -43,12 +43,9 @@ Dapp中使用NebPay的例子， 可参考`examples/example.html`.
     serialNumber = nebPay.pay(to, value, options); //调用交易接口会返回32位的交易序列号，Dapp端用该序列号查询交易结果
 </script>
 ```
-#### 交易返回信息的处理
-浏览器插件和钱包app对交易返回信息有不同的处理方式。
-* 跳转钱包APP发送交易时，钱包app无法直接返回消息给Dapp页面，所以会将交易信息发送到一个交易查询服务器。Dapp端需要记录发送交易时返回的序列号`serialNumber`，然后使用`queryPayInfo`接口去查询该交易的序列号去获取交易信息.
-* 使用浏览器插件发送交易时可以指定一个`listener`函数来接收并处理交易返回信息。浏览器插件也可以将交易结果发送到交易查询服务器。
 
 #### 接口&参数说明
+
 ##### options参数说明
 
 每个接口都有一个共同的参数`options`，该参数的详细介绍如下:
@@ -148,3 +145,22 @@ simulateCall 参数与 call 接口参数相同，对应于RPC [Call](https://git
 参数说明：
 
 `serialNumber` 交易序列号，使用上面介绍的接口发送交易后会返回该交易的序列号，是一个32位随机数。钱包App会将交易结果会上传到交易查询呢服务器，Dapp端用` queryPayInfo(serialNumber)`来查询交易结果信息。
+
+
+#### 交易返回信息的处理
+浏览器插件和钱包app对交易返回信息有不同的处理方式。
+* 跳转钱包APP发送交易时，钱包app无法直接返回消息给Dapp页面，所以会将交易信息发送到一个交易查询服务器。Dapp端需要记录发送交易时返回的序列号`serialNumber`，然后使用`queryPayInfo`接口去查询该交易的序列号去获取交易信息.
+* 使用浏览器插件发送交易时可以指定一个`listener`函数来接收并处理交易返回信息。浏览器插件也可以将交易结果发送到交易查询服务器。
+
+#### 交易返回信息
+
+ `pay`, `nrc20pay`, `deploy`, `call`的返回信息格式为:
+```$xslt
+{"txhash":"a333288574df47b411ca43ed656e16c99c0af98fa3ab14647ce1ad66b45d43f1","contract_address":""}
+```
+
+`simulateCall`的返回信息格式为:
+```$xslt
+{"result":"null","execute_err":"","estimate_gas":"20168"}
+```
+
