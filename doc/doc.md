@@ -95,17 +95,17 @@ var defaultOptions = {
 
 `options` 必须指定代币的小数点位数和代币合约地址，另外可指定代币名称、符号。
 
-    ```js
-    options = {
-        //.....
-        nrc20: {  
-            address: "", //contract address of nrc20
-            decimals: 0,
-            name: "",
-            symbol: ""
-        }
+```js
+options = {
+    //.....
+    nrc20: {  
+        address: "", //contract address of nrc20
+        decimals: 0,
+        name: "",
+        symbol: ""
     }
-    ```
+}
+```
 
 ##### deploy
 
@@ -154,16 +154,16 @@ simulateCall 参数与 call 接口参数相同，对应于RPC [Call](https://git
 
 `serialNumber` 交易序列号，使用上面介绍的接口发送交易后会返回该交易的序列号，是一个32位随机数。钱包App会将交易结果会上传到交易查询呢服务器，Dapp端用` queryPayInfo(serialNumber)`来查询交易结果信息。
 返回值: `queryPayInfo`会返回一个`Promise`.
-*
-  ```js
-  nebPay.queryPayInfo(serialNumber)
-      .then(function (resp) {
-          console.log(resp);
-      })
-      .catch(function (err) {
-          console.log(err);
-      });
-  ```
+
+```js
+nebPay.queryPayInfo(serialNumber)
+  .then(function (resp) {
+      console.log(resp);
+  })
+  .catch(function (err) {
+      console.log(err);
+  });
+```
 
 #### 交易返回信息的处理
 浏览器插件和钱包app对交易返回信息有不同的处理方式。
