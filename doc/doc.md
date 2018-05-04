@@ -12,6 +12,7 @@ NebPay SDK 为不同平台的交易提供了统一的支付接口，开发者在
 * `deploy`  用于部署智能合约
 * `call`  用于调用智能合约
 * `simulateCall` 用于模拟运行智能合约的调用
+* `queryPayInfo` 用于查询支付结果
   
 
  
@@ -22,16 +23,17 @@ nrc20pay|用于NRC20代币的转账
 deploy|用于部署智能合约
 call|用于调用智能合约
 simulateCall|用于模拟运行智能合约的调用
+queryPayInfo|用于查询支付结果
 
 以上接口中，前四个api对应于[SendTransaction](https://github.com/nebulasio/wiki/blob/master/rpc_admin.md#sendtransaction)接口，只是细化了`SendTransaction`的使用场景。simulateCall 对应于RPC [Call](https://github.com/nebulasio/wiki/blob/master/rpc.md#call)接口，只用于和浏览器扩展的交互，移动端钱包app不支持该接口。
 
 
 ### 使用说明
-在开发Dapp时,如果要使用NebPay SDK来处理交易, 需要将`nebPay.js`插入到Dapp页面中, 然后就可以使用nebpay模块来发送交易了。
+在开发Dapp时，如果要使用NebPay SDK来处理交易， 需要将`nebPay.js`插入到Dapp页面中， 然后就可以使用nebpay模块来发送交易了。
 
 当用户在桌面浏览器（chrome）使用Dapp，nebPay会调用浏览器插件来处理交易。当在手机端使用Dapp，nebPay会跳转到钱包app来处理交易.
 
-Dapp中使用NebPay的例子, 可参考`examples/example.html`.
+Dapp中使用NebPay的例子， 可参考`examples/example.html`.
 ```html
 <script src="../dist/nebPay.js"></script>
 <script >
@@ -44,12 +46,12 @@ Dapp中使用NebPay的例子, 可参考`examples/example.html`.
 #### 交易返回信息的处理
 浏览器插件和钱包app对交易返回信息有不同的处理方式。
 * 跳转钱包APP发送交易时，钱包app无法直接返回消息给Dapp页面，所以会将交易信息发送到一个交易查询服务器。Dapp端需要记录发送交易时返回的序列号`serialNumber`，然后使用`queryPayInfo`接口去查询该交易的序列号去获取交易信息.
-* 使用浏览器插件发送交易时可以指定一个`listener`函数来接收并处理交易返回信息。
+* 使用浏览器插件发送交易时可以指定一个`listener`函数来接收并处理交易返回信息。浏览器插件也可以将交易结果发送到交易查询服务器。
 
 #### 接口&参数说明
 ##### options参数说明
 
-每个接口都有一个共同的参数`options`,该参数的详细介绍如下:
+每个接口都有一个共同的参数`options`，该参数的详细介绍如下:
 ```js
 var defaultOptions = {
 	goods: {        //Dapp端对当前交易商品的描述信息
@@ -72,21 +74,12 @@ var defaultOptions = {
 	nrc20: undefined
 };
 ```
-对于callback的说明：callback是支付后返回信息的处理方式。
-
-* 对于跳转钱包app支付，交易返回信息记录在固定的 API中，Dapp端可以通过每条交易的serialNumber来访问该API读取交易返回信息。
-* 对于通过浏览器插件支付，可以自定义callback函数来处理交易返回信息。只需要在`options.callback`指定callback函数即可.
-
-问题：
-* Dapp如何知道当前支付是通过钱包app还是浏览器插件呢？
-* Dapp可以获取到每条交易的serialNumber吗？
-
 
 ##### pay
 
     pay(to, value, options)
 
-参数说明
+参数说明：
 
 `to` 转账目的地址
 
@@ -98,7 +91,7 @@ var defaultOptions = {
 
     nrc20pay(currency, to, value, options)
 
-参数说明
+参数说明：
 
 `currency` NRC20代币名称
 
@@ -113,13 +106,13 @@ var defaultOptions = {
 
     deploy(source, sourceType, args, options)
 
-参数说明:
+参数说明：
 
 `source` 合约源代码
 
 `sourceType` 合约代码类型
 
-`args` 合约的初始化函数参数，初始化函数无参数则留空，参数格式为参数数组的JSON字符串，比如`["arg"]` , `["arg1","arg2"]`。
+`args` 合约的初始化函数参数，初始化函数无参数则留空，参数格式为参数数组的JSON字符串，比如`["arg"]` ， `["arg1","arg2"]`。
 
 `options` 参见 options参数说明
 
@@ -128,7 +121,7 @@ var defaultOptions = {
 
     call(to, value, func, args, options)
 
-参数说明:
+参数说明：
 
 `to` 合约地址
 
@@ -136,7 +129,7 @@ var defaultOptions = {
 
 `func` 要调用的合约函数名
 
-`args` 调用的函数参数，格式为参数数组的JSON字符串，比如`["arg"]` , `["arg1","arg2"]`。
+`args` 调用的函数参数，格式为参数数组的JSON字符串，比如`["arg"]` ， `["arg1","arg2"]`。
 
 `options` 参见 options参数说明
 
@@ -144,6 +137,14 @@ var defaultOptions = {
 
     simulateCall(to, value, func, args, options)
 
-参数说明:
+参数说明：
 
 simulateCall 参数与 call 接口参数相同，对应于RPC [Call](https://github.com/nebulasio/wiki/blob/master/rpc.md#call)接口。用来模拟执行合约调用，可以得到合约运行结果、预计gas消耗。主要用于调用合约中的查询函数，得到该函数的返回值。
+
+##### queryPayInfo
+
+    queryPayInfo(serialNumber)
+
+参数说明：
+
+`serialNumber` 交易序列号，使用上面介绍的接口发送交易后会返回该交易的序列号，是一个32位随机数。钱包App会将交易结果会上传到交易查询呢服务器，Dapp端用` queryPayInfo(serialNumber)`来查询交易结果信息。
