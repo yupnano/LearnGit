@@ -35,7 +35,7 @@ Dapp中使用NebPay的例子， 可参考`examples/example.html`.
         goods: {        //商品描述
             name: "example"
         },        
-	    listener: undefined //为浏览器插件指定listener,处理交易返回结果
+        listener: undefined //为浏览器插件指定listener,处理交易返回结果
     }
     serialNumber = nebPay.pay(to, value, options); //调用交易接口会返回32位的交易序列号，Dapp端用该序列号查询交易结果
 </script>
@@ -94,7 +94,7 @@ var defaultOptions = {
 `value` 转账数额，单位为 NRC20 token
 
 `options` 必须指定代币的小数点位数和代币合约地址，另外可指定代币名称、符号。
-*
+
     ```js
     options = {
         //.....
@@ -173,12 +173,12 @@ simulateCall 参数与 call 接口参数相同，对应于RPC [Call](https://git
 #### 交易返回信息
 
  `pay`, `nrc20pay`, `deploy`, `call`的返回信息格式为:
-```js
+```json
 {"txhash":"a333288574df47b411ca43ed656e16c99c0af98fa3ab14647ce1ad66b45d43f1","contract_address":""}
 ```
 
 `simulateCall`的返回信息格式为:
-```js
+```json
 {"result":"null","execute_err":"","estimate_gas":"20168"}
 ```
 
