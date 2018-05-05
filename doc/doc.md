@@ -97,7 +97,7 @@ var defaultOptions = {
 
 ```js
 options = {
-    //.....
+    //nrc20参数介绍
     nrc20: {  
         address: "", //contract address of nrc20
         decimals: 0,
