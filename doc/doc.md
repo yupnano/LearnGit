@@ -22,8 +22,8 @@ NebPay 根据不同的支付场景提供了4个支付API和1个交易查询API�
 如果在Dapp中使用NebPay，需要在github下载NebPay源码，然后打包生成`nebpay.js`。然后插入到Dapp页面就可以使用了。
 
 示例代码如下：
-```angular2html
-<script src="../dist/nebPay.js"></script>
+```html
+<script src="nebPay.js"></script>
 <script >
     var NebPay = require("nebpay");
     var nebPay = new NebPay();    
@@ -45,39 +45,43 @@ NebPay 根据不同的支付场景提供了4个支付API和1个交易查询API�
         }
         
         //发送交易(发起智能合约调用)
-        serialNumber = nebPay.call(to, value, callFunction, callArgs,options);
+        serialNumber = nebPay.call(to, value, callFunction, callArgs, options);
+        
         //设置定时查询交易结果
         intervalQuery = setInterval(function() {
-            onrefreshClick();
+            funcIntervalQuery();
         }, 5000);
     }
-                
-    nebPay.queryPayInfo(serialNumber)   //search transaction result from server (result upload to server by app)
-        .then(function (resp) {
-            console.log("tx result: " + resp)   //resp is a JSON string
-            var respObject = JSON.parse(resp)
-            if(respObject.code === 0){
-                //交易成功, 处理相关任务
-                
-                clearInterval(intervalQuery)    //清除定时查询
-            }
-        })
-        .catch(function (err) {
-            console.log(err);
-        });
+    
+    //查询交易结果
+    function funcIntervalQuery() {   
+        nebPay.queryPayInfo(serialNumber)   //search transaction result from server (result upload to server by app)
+            .then(function (resp) {
+                console.log("tx result: " + resp)   //resp is a JSON string
+                var respObject = JSON.parse(resp)
+                if(respObject.code === 0){
+                    //交易成功, 处理相关任务
+                    
+                    clearInterval(intervalQuery)    //清除定时查询
+                }
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    }
     
 </script>
 ```
 
-queryPayInfo(serialNumber) 查询到的结果格式为(反序列化`JSON.parse(resp)`之后):
+queryPayInfo(serialNumber) 查询到的结果格式为JSON字符串,可以反序列化`JSON.parse(resp)`得到JS对象。查询结果的格式为：
 ```
-//查询失败, 没有该记录
+//查询失败, 没有该记录, 可以多查询几次
 {
     "code": 1,
     "data": {},
     "msg": "payId ZBTSkk74dB4tPJI9J8FDFMu270h7yaut get transaction error"
 }
-//查询成功, 
+//查询成功
 {
     "code": 0,
     "data": {
