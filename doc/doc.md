@@ -33,15 +33,14 @@ NebPay 根据不同的支付场景提供了4个支付API和1个交易查询API�
     //点击按钮发起交易, 这里为调用智能合约的例子
     function onButtonClick() {
         
-        var to = dappAddress;
+        var to = dappAddress;   //Dapp的合约地址
         var value = "0";
         var callFunction = "" //调用的函数名称
-        var callArgs =  "" //格式为参数数组的JSON字符串, 比如'["arg"]','["arg1","arg2]'        
+        var callArgs =  ""  //参数格式为参数数组的JSON字符串, 比如'["arg"]','["arg1","arg2]'        
         var options = {
             goods: {        //商品描述
                 name: "example"
-            },        
-            listener: undefined //为浏览器插件指定listener,处理交易返回结果
+            }
         }
         
         //发送交易(发起智能合约调用)
@@ -53,7 +52,7 @@ NebPay 根据不同的支付场景提供了4个支付API和1个交易查询API�
         }, 5000);
     }
     
-    //查询交易结果
+    //查询交易结果. queryPayInfo返回的是一个Promise对象.
     function funcIntervalQuery() {   
         nebPay.queryPayInfo(serialNumber)   //search transaction result from server (result upload to server by app)
             .then(function (resp) {
