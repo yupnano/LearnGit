@@ -100,7 +100,10 @@ queryPayInfo(serialNumber) 查询到的结果格式为(反序列化`JSON.parse(r
 	}
 ```
 
+### NebPay 使用范例
+
 这里有个使用nebPay的例子可以参考: SuperDictionary (http://39.105.36.104:8080/index.html)
+
 SuperDictionary 在桌面端的使用过程为:
 [视频1]
 
