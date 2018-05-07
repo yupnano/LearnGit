@@ -33,8 +33,7 @@ queryPayInfo|用于查询支付结果
     var intervalQuery; //定时查询交易结果
     
     //点击按钮发起交易, 这里为调用智能合约的例子
-    function onButtonClick() {
-        
+    function onButtonClick() {        
         var to = dappAddress;   //Dapp的合约地址
         var value = "0";
         var callFunction = "" //调用的函数名称
@@ -110,7 +109,7 @@ queryPayInfo(serialNumber) 查询到的结果格式为JSON字符串,可以反序
 这里有个使用nebPay的例子可以参考: SuperDictionary (http://39.105.36.104:8080/index.html)
 
 SuperDictionary 在桌面端的使用过程为:
-[视频1]
+https://youtu.be/FSFZqoUIT8A
 
 SuperDictionary 在手机端的使用过程为:
-[视频2]
+https://youtu.be/Cjlo9KKwlNE
