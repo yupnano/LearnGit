@@ -97,7 +97,7 @@ queryPayInfo(serialNumber) 查询到的结果格式为(反序列化`JSON.parse(r
         "timestamp": 1525508076
     },
     "msg": "success"
-	}
+}
 ```
 
 ### NebPay 使用范例
