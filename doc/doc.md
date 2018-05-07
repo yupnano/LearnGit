@@ -10,11 +10,13 @@ NeyPay（https://github.com/nebulasio/nebPay）是官方发布的星云链支付
 
 NebPay 根据不同的支付场景提供了4个支付API和1个交易查询API。关于接口的详细说明可以参考文档https://github.com/nebulasio/nebPay/blob/master/doc/NebPay%E4%BB%8B%E7%BB%8D.md。
 
-- pay	用于账户间的NAS转账
-- nrc20pay	用于NRC20代币的转账,仅接口实现，app不支持
-- deploy	用于部署智能合约，仅接口实现
-- call	用于调用智能合约
-- queryPayInfo	用于查询支付结果
+接口 | 简介 
+:--- | :---
+pay | 用于账户间的NAS转账
+nrc20pay|用于NRC20代币的转账,仅接口实现，app不支持
+deploy|用于部署智能合约，仅接口实现(目前尚不支持该API)
+call|用于调用智能合约
+queryPayInfo|用于查询支付结果
 
 调用支付API时会返回一个交易序列号，然后Dapp可以使用查询API通过该序列号查询交易的结果。
 
