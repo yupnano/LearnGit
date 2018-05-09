@@ -2,7 +2,7 @@
 
 
 ### NebPay SDK介绍
-NeyPay（https://github.com/nebulasio/nebPay）是官方发布的星云链支付工具，可以用来解决Dapp中的支付需求。
+NeyPay（https://github.com/nebulasio/nebPay ） 是官方发布的星云链支付工具，可以用来解决Dapp中的支付需求。
 
 用户在使用Dapp过程中需要发送交易，但是直接在Dapp中导入钱包文件或输入私钥是极不安全的，所以Nebulas官方提供了一个支付接口NebPay。Dapp开发者可以使用NebPay作为支付通道，来处理sendTransaction的需求。Dapp用户需要安装浏览器插件（桌面端）或钱包APP（移动端）来完成Dapp页面发起的交易请求。
 
