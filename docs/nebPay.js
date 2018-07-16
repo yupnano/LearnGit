@@ -92,13 +92,13 @@ function openApp(appParams, options) {
   // ifr.src = url;
   // ifr.style.display='none';
 
-  if (!Utils.isNano() && options.mobile.showInstallTip) {
-    checkOpen(function (opened) {
-      if (!opened) {
-        showNanoInstallTip(options);
-      }
-    });
-  }
+  //if (!Utils.isNano() && options.mobile.showInstallTip) {
+  checkOpen(function (opened) {
+    if (!opened) {
+      showNanoInstallTip(options);
+    }
+  });
+  //}
 
   // document.body.appendChild(ifr);      
   // setTimeout(function() {
@@ -366,6 +366,7 @@ Pay.prototype = {
 		}
 
 		if (options.qrcode.showQRCode && !Utils.isNano()) {
+			Window.alert('show QRcode.');
 			QRCode.showQRCode(JSON.stringify(appParams), options);
 		}
 
