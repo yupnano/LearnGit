@@ -38,7 +38,10 @@
             var value = document.getElementById("nrc20value").value;
             serialNumber = nebPay.nrc20pay("NRC", to, value, {
                 qrcode: {
-                    showQRCode: true
+                    showQRCode: document.getElementsByName("showQRCode")[0].checked
+                },
+                extension: {
+                    openExtension:  document.getElementsByName("openExtension")[0].checked //set if need show extension payment mode
                 },
                 goods: {
                     name: "test",
@@ -50,6 +53,8 @@
                     symbol: "NRC",
                     decimals: 18
                 },
+                gasPrice: document.getElementById("gasPrice").value ,// || "1000001",// 1000000 ,
+                gasLimit: document.getElementById("gasLimit").value ,// || "20001", //20000
                 debug: enableDebug
             });
             setTimeout(() => {
@@ -62,10 +67,18 @@
             var source = document.getElementById("source").value;
             var args = document.getElementById("deployArgs").value;
             serialNumber = nebPay.deploy(source, sourceType, args, {
+                qrcode: {
+                    showQRCode: document.getElementsByName("showQRCode")[0].checked
+                },
+                extension: {
+                    openExtension:  document.getElementsByName("openExtension")[0].checked //set if need show extension payment mode
+                },
                 goods: {
                     name: "test",
                     desc: "test goods"
-                }
+                },
+                gasPrice: document.getElementById("gasPrice").value ,// || "1000001",// 1000000 ,
+                gasLimit: document.getElementById("gasLimit").value ,// || "20001", //20000
             });
             setTimeout(() => {
                 onrefreshClick();
@@ -79,12 +92,17 @@
             var callArgs = document.getElementById("callArgs").value;
             serialNumber = nebPay.call(to, value, callFunction, callArgs, {
                 qrcode: {
-                    showQRCode: true
+                    showQRCode: document.getElementsByName("showQRCode")[0].checked
+                },
+                extension: {
+                    openExtension:  document.getElementsByName("openExtension")[0].checked //set if need show extension payment mode
                 },
                 goods: {
                     name: "test",
                     desc: "test goods"
                 },
+                gasPrice: document.getElementById("gasPrice").value ,// || "1000001",// 1000000 ,
+                gasLimit: document.getElementById("gasLimit").value ,// || "20001", //20000
                 listener: listener,  //set listener for extension transaction result
                 debug: enableDebug
             });

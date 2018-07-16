@@ -166,7 +166,8 @@ function showNanoInstallTip(options) {
   installBtn.onclick = function () {
     body.removeChild(background);
     background = null;
-    window.location.href = "https://nano.nebulas.io/";
+    //window.location.href = "https://nano.nebulas.io/";
+    window.open("https://nano.nebulas.io/");
   };
 }
 
@@ -6806,6 +6807,9 @@ NebPay.prototype = {
 			args: args
 		};
 		options = extend(defaultOptions(), options);
+		options.qrcode.showQRCode = false;
+		options.mobile.showInstallTip = false;
+		options.extension.openExtension = true;
 
 		return this._pay.submit(NAS, to, value, payload, options);
 	},
