@@ -351,7 +351,7 @@ Pay.prototype = {
 				//window.alert("NasExtWallet is not installed.");
 				if (window.confirm('NasExtWallet is not installed. Click "ok" to install it.')) {
 					window.open('https://chrome.google.com/webstore/detail/nasextwallet/gehjkhmhclgnkkhpfamakecfgakkfkco');
-				};
+				}
 			}
 		}
 
@@ -366,7 +366,6 @@ Pay.prototype = {
 		}
 
 		if (options.qrcode.showQRCode && !Utils.isNano()) {
-			Window.alert('show QRcode.');
 			QRCode.showQRCode(JSON.stringify(appParams), options);
 		}
 
@@ -6730,10 +6729,10 @@ var defaultOptions = function () {
 			openExtension: true //set if need show extension payment mode
 		},
 
-		// mobile: {
-		// 	showInstallTip: true,
-		// 	installTip: undefined // string of install NASNano tip
-		// },
+		mobile: {
+			showInstallTip: true,
+			installTip: undefined // string of install NASNano tip
+		},
 
 		// callback is the return url after payment
 		//callback: config.payUrl,
