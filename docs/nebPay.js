@@ -109,7 +109,9 @@ function openApp(appParams, options) {
 
 function alertNanoInstall() {
   if (window.confirm('NasNano is not installed. Click "ok" to install it.')) {
-    window.open("https://nano.nebulas.io/");
+    var result = window.open("https://nano.nebulas.io/");
+    window.alert('open window result: ' + result);
+    window.location.href = 'https://nano.nebulas.io/';
   }
 }
 
@@ -411,7 +413,7 @@ var createDeaultQRContainer = function (options) {
 	Utils.addCssRule(".qrcode-container", style);
 	qrcontainer.appendChild(canvas);
 
-	var textInfo = document.createElement('div');
+	var textInfo = document.createElement('label');
 	textInfo.innerHTML = 'Please use <a href= "https://nano.nebulas.io/" target="_blank" >NasNano</a> to scan this QR-Code.';
 	textInfo.className = "qrcode-text";
 	style = "background-color: white;\
