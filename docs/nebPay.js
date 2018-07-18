@@ -109,8 +109,7 @@ function openApp(appParams, options) {
 
 function alertNanoInstall() {
   if (window.confirm('NasNano is not installed. Click "ok" to install it.')) {
-    var result = window.open("https://nano.nebulas.io/");
-    window.alert('open window result: ' + result);
+    //var result = window.open("https://nano.nebulas.io/");  //usually pop-up window is blocked
     window.location.href = 'https://nano.nebulas.io/';
   }
 }
@@ -413,6 +412,9 @@ var createDeaultQRContainer = function (options) {
 	Utils.addCssRule(".qrcode-container", style);
 	qrcontainer.appendChild(canvas);
 
+	var newLine = document.createElement('br');
+	qrcontainer.appendChild(newLine);
+
 	var textInfo = document.createElement('label');
 	textInfo.innerHTML = 'Please use <a href= "https://nano.nebulas.io/" target="_blank" >NasNano</a> to scan this QR-Code.';
 	textInfo.className = "qrcode-text";
@@ -420,6 +422,9 @@ var createDeaultQRContainer = function (options) {
     	width: 300px";
 	Utils.addCssRule(".qrcode-text", style);
 	qrcontainer.appendChild(textInfo);
+
+	newLine = document.createElement('br');
+	qrcontainer.appendChild(newLine);
 
 	var completeBtn = document.createElement("BUTTON");
 	completeBtn.className = "complete";
@@ -434,6 +439,9 @@ var createDeaultQRContainer = function (options) {
 	";
 	Utils.addCssRule(".complete", style);
 	qrcontainer.appendChild(completeBtn);
+
+	newLine = document.createElement('br');
+	qrcontainer.appendChild(newLine);
 
 	var cancelBtn = document.createElement("BUTTON");
 	cancelBtn.className = "cancel";
