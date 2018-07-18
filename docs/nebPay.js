@@ -109,8 +109,8 @@ function openApp(appParams, options) {
 
 function alertNanoInstall() {
   if (window.confirm('NasNano is not installed. Click "ok" to install it.')) {
-    window.open("https://nano.nebulas.io/"); //usually pop-up window is blocked
-    //window.location.href='https://nano.nebulas.io/';
+    //window.open("https://nano.nebulas.io/");  //usually pop-up window is blocked
+    window.location.href = 'https://nano.nebulas.io/';
   }
 }
 
