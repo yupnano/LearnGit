@@ -1,5 +1,5 @@
 Account related API.
-With Account related account you can create new account, 
+With Account related API you can create new account, get account address, private key, public key. and export keystore data or restore an account.
 
 ### Create new account
 Create a new account.
